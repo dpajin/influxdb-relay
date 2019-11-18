@@ -5,8 +5,8 @@ import (
 	"log"
 	"sync"
 
-	"github.com/veepee-moc/influxdb-relay/config"
-	"github.com/veepee-moc/influxdb-relay/relay"
+	"../config"
+	"../relay"
 )
 
 // Service is a map of relays
@@ -20,7 +20,7 @@ func New(config config.Config) (*Service, error) {
 	s.relays = make(map[string]relay.Relay)
 
 	for _, cfg := range config.HTTPRelays {
-		h, err := relay.NewHTTP(cfg, config.Verbose, config.Filters)
+		h, err := relay.NewHTTP(cfg, config.Verbose, config.Filters, config.Debug)
 		if err != nil {
 			return nil, err
 		}

@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/veepee-moc/influxdb-relay/config"
+	"../config"
 	"time"
 )
 
@@ -131,8 +131,8 @@ func WriterTest(t *testing.T, expected *ResponseWriter, actual *ResponseWriter) 
 	assert.Equal(t, expected.header, actual.header)
 }
 
-func createHTTP(t *testing.T, cfg config.HTTPConfig, verbose bool) *HTTP {
-	tmp, err := NewHTTP(cfg, verbose, config.Filters{})
+func createHTTP(t *testing.T, cfg config.HTTPConfig, verbose bool, debug bool) *HTTP {
+	tmp, err := NewHTTP(cfg, verbose, config.Filters{}, debug)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -141,7 +141,7 @@ func createHTTP(t *testing.T, cfg config.HTTPConfig, verbose bool) *HTTP {
 
 func TestLogMiddleware(t *testing.T) {
 	defer resetWriter()
-	h := createHTTP(t, config.HTTPConfig{}, true)
+	h := createHTTP(t, config.HTTPConfig{}, true, true)
 
 	h.logger = log.New(logger, "", 0)
 	handler := h.logMiddleWare((*HTTP).End)

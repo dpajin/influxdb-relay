@@ -15,6 +15,7 @@ type Config struct {
 	UDPRelays  []UDPConfig  `toml:"udp"`
 	Filters    Filters      `toml:"filter"`
 	Verbose    bool
+	Debug    bool
 }
 
 // Filter represents a regex which may be

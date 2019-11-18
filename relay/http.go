@@ -20,7 +20,7 @@ import (
 	"time"
 
 	"github.com/influxdata/influxdb/models"
-	"github.com/veepee-moc/influxdb-relay/config"
+	"../config"
 )
 
 // HTTP is a relay for HTTP influxdb writes
@@ -85,13 +85,15 @@ var (
 // NewHTTP creates a new HTTP relay
 // This relay will most likely be tied to a RelayService
 // and manage a set of HTTPBackends
-func NewHTTP(cfg config.HTTPConfig, verbose bool, fs config.Filters) (Relay, error) {
+func NewHTTP(cfg config.HTTPConfig, verbose bool, fs config.Filters, debug bool) (Relay, error) {
 	h := new(HTTP)
 
 	h.addr = cfg.Addr
 	h.name = cfg.Name
 	h.log = verbose
+	h.debug = debug
 	h.logger = log.New(os.Stdout, "relay: ", 0)
+	log.SetFlags(LstdFlags)
 
 	h.pingResponseCode = DefaultHTTPPingResponse
 	if cfg.DefaultPingResponse != 0 {

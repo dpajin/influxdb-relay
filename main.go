@@ -7,8 +7,8 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/veepee-moc/influxdb-relay/config"
-	"github.com/veepee-moc/influxdb-relay/relayservice"
+	"./config"
+	"./relayservice"
 )
 
 const (
@@ -22,7 +22,8 @@ var (
 	}
 
 	configFile  = flag.String("config", "", "Configuration file to use")
-	verbose     = flag.Bool("v", false, "If set, InfluxDB Relay will log HTTP requests")
+	verbose     = flag.Bool("v", false, "If set, InfluxDB Relay will provide some logs")
+	debug     = flag.Bool("d", false, "If set, InfluxDB Relay will log HTTP requests")
 	versionFlag = flag.Bool("version", false, "Print current InfluxDB Relay version")
 )
 
@@ -68,5 +69,6 @@ func main() {
 	}
 
 	cfg.Verbose = *verbose
+	cfg.Debug = *debug
 	runRelay(cfg)
 }
