@@ -17,9 +17,10 @@ func allMiddlewares(h *HTTP, handlerFunc relayHandlerFunc) relayHandlerFunc {
 
 func (h *HTTP) logMiddleWare(next relayHandlerFunc) relayHandlerFunc {
 	return relayHandlerFunc(func(h *HTTP, w http.ResponseWriter, r *http.Request, start time.Time) {
-		if h.log {
-			h.logger.Println("got request on: " + r.URL.Path)
-		}
+		// do not need logging of each request, but I need all other logs
+		// if h.log {
+		//	h.logger.Println("got request on: " + r.URL.Path)
+		// }
 		next(h, w, r, start)
 	})
 }
